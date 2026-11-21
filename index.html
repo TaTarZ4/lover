@@ -71,7 +71,9 @@
     border:2.5px solid var(--brown);border-radius:18px;padding:12px 14px;background:#fff;
     box-shadow:0 4px 0 var(--brown);transition:transform .12s,box-shadow .12s,background .15s;
   }
-  .opt{flex:1;text-align:left}
+  .opt{flex:1;text-align:left;display:flex;align-items:center;gap:12px}
+  .opt img{width:52px;height:74px;object-fit:cover;border-radius:10px;border:2px solid var(--brown);flex-shrink:0;background:#ffe9ef}
+  .opt span{flex:1}
   .opt:hover{background:#fff4f7}
   .opt:active,.btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--brown)}
   .opt.sel{background:var(--pink);animation:wiggle .4s}
@@ -188,7 +190,14 @@ const STEPS = {
       {v:"Little Woodrama 🪵",link:"https://www.instagram.com/littlewoodrama9/"},
       {v:"ที่อื่น เธอเลือกเอง"} ] },
   movie:{ title:"อยากดูเรื่องอะไร? 🎬", hint:"เลือกได้เลย", type:"multi", char:"blue",
-    opts:[{v:"รามายณะ: ปฐมบทแห่งตำนาน"},{v:"เรื่องอื่น เธอเลือกเอง"}] },
+    opts:[
+      {v:"รามายณะ: ปฐมบทแห่งตำนาน",img:"https://cdn.majorcineplex.com/uploads/movie/5261/thumb_5261.jpg"},
+      {v:"คุณยายวรนาฏ",img:"https://cdn.majorcineplex.com/uploads/movie/5131/thumb_5131.jpg"},
+      {v:"มาโดกะ มาจิก้า เดอะ มูฟวี่",img:"https://cdn.majorcineplex.com/uploads/movie/5311/thumb_5311.jpg"},
+      {v:"สูตรโกงปล้นแบงก์",img:"https://cdn.majorcineplex.com/uploads/movie/5102/thumb_5102.jpg"},
+      {v:"ก็อดซิลล่า ไมนัส ซีโร่",img:"https://cdn.majorcineplex.com/uploads/movie/5204/thumb_5204.jpg"},
+      {v:"TAME เลี้ยงไม่เชื่อง",img:"https://cdn.majorcineplex.com/uploads/movie/5132/thumb_5132.jpg"},
+      {v:"เรื่องอื่น เธอเลือกเอง"} ] },
   walk:{ title:"เดินเล่นสวนไหนดี? 🌳", hint:"เลือกได้หลายที่", type:"multi", char:"bun",
     opts:[{v:"สวนรถไฟ"},{v:"สวนลุมพินี"},{v:"สวนเบญจกิติ"}] },
   drink:{ title:"ไปดื่มสไตล์ไหน? 🍻", hint:"บอกแนวคร่าวๆ ก็ได้", type:"multi", char:"mochi",
@@ -263,7 +272,7 @@ function renderStep(){
     const cur=[].concat(answers[key]||[]);
     body=`<div class="opts">`+q.opts.map((o,i)=>`
       <div class="optrow" style="animation-delay:${i*.07}s">
-        <button class="opt ${cur.includes(o.v)?"sel":""}" data-v="${esc(o.v)}">${esc(o.v)}</button>
+        <button class="opt ${cur.includes(o.v)?"sel":""}" data-v="${esc(o.v)}">${o.img?`<img src="${o.img}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span>${esc(o.v)}</span></button>
         ${o.link?`<a class="link" href="${o.link}" target="_blank" rel="noopener">ดูร้าน ↗</a>`:""}
       </div>`).join("")+`</div>`;
   }
