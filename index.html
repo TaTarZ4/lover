@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ไปเที่ยวกันนะ 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff8ec; --sky:#d9f0ff; --pink:#ffb7c9; --pink-d:#ff8fae; --blue:#8ed0f5;
+    --brown:#6b4a3c; --yellow:#ffe58a; --card:#fffdf8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{
+    min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:18px 14px 28px;
+    font-family:"Mali","Itim","Noto Sans Thai",system-ui,sans-serif;color:var(--brown);
+    background:
+      radial-gradient(circle at 20% 15%,#fff 0 40px,transparent 41px),
+      linear-gradient(180deg,var(--sky) 0%,#eaf7ff 45%,#fff0f4 100%);
+    background-attachment:fixed;overflow-x:hidden;
+  }
+  /* ---------- พื้นหลังลอย ---------- */
+  .sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .cloud{position:absolute;background:#fff;border-radius:99px;opacity:.9;animation:drift linear infinite}
+  .cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+  .cloud::before{width:55%;height:160%;left:12%;top:-70%}
+  .cloud::after{width:40%;height:120%;right:12%;top:-45%}
+  @keyframes drift{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
+  .float{position:absolute;bottom:-40px;font-size:22px;animation:rise linear infinite;opacity:.85}
+  @keyframes rise{to{transform:translateY(-115vh) rotate(40deg)}}
+
+  /* ---------- การ์ดหลัก ---------- */
+  .card{
+    position:relative;z-index:2;width:100%;max-width:460px;background:var(--card);
+    border:3px solid var(--brown);border-radius:34px;padding:26px 20px 22px;text-align:center;
+    box-shadow:0 8px 0 var(--pink-d),0 18px 40px #6b4a3c26;
+    animation:pop .5s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+  .card::before{ /* ลายจุด */
+    content:"";position:absolute;inset:8px;border-radius:26px;border:2px dashed #ffd3df;pointer-events:none}
+  h1{font-size:1.45rem;line-height:1.35;margin:.3em 0 .3em;font-weight:700}
+  p{line-height:1.65;margin:.3em 0 .9em}
+  small{opacity:.65;font-size:.82rem}
+
+  /* ---------- ตัวการ์ตูน ---------- */
+  .chars{display:flex;justify-content:center;align-items:flex-end;gap:6px;height:112px;margin-bottom:4px}
+  .chars svg{width:92px;height:auto;overflow:visible}
+  .chars .c{animation:hop 1.6s ease-in-out infinite;transform-origin:50% 100%}
+  .chars .c:nth-child(2){animation-delay:.25s}
+  .chars .c:nth-child(3){animation-delay:.5s}
+  @keyframes hop{0%,100%{transform:translateY(0) scale(1,1)}20%{transform:scale(1.06,.92)}50%{transform:translateY(-16px) scale(.97,1.05)}80%{transform:scale(1.04,.95)}}
+  .eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
+  @keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+  .one svg{width:104px}
+
+  /* ---------- แถบความคืบหน้า ---------- */
+  .bar{height:14px;background:#ffe9ef;border:2px solid var(--brown);border-radius:99px;overflow:hidden;margin:0 6px 14px;position:relative}
+  .bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(45deg,var(--pink-d) 0 10px,var(--pink) 10px 20px);
+    transition:width .5s cubic-bezier(.3,1.3,.5,1);background-size:28px 28px;animation:stripe 1s linear infinite}
+  @keyframes stripe{to{background-position:28px 0}}
+
+  /* ---------- ตัวเลือก ---------- */
+  .opts{display:grid;gap:10px;margin:14px 0 8px;text-align:left}
+  .optrow{display:flex;gap:8px;align-items:stretch;animation:slidein .4s both}
+  @keyframes slidein{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+  .opt,.btn{
+    font:inherit;font-size:1rem;color:var(--brown);cursor:pointer;
+    border:2.5px solid var(--brown);border-radius:18px;padding:12px 14px;background:#fff;
+    box-shadow:0 4px 0 var(--brown);transition:transform .12s,box-shadow .12s,background .15s;
+  }
+  .opt{flex:1;text-align:left}
+  .opt:hover{background:#fff4f7}
+  .opt:active,.btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--brown)}
+  .opt.sel{background:var(--pink);animation:wiggle .4s}
+  .opt.sel::after{content:" ✓";font-weight:700}
+  @keyframes wiggle{25%{transform:rotate(-1.5deg) scale(1.02)}75%{transform:rotate(1.5deg) scale(1.02)}}
+  .link{
+    display:grid;place-items:center;padding:0 12px;border:2.5px solid var(--brown);border-radius:18px;
+    background:var(--yellow);color:var(--brown);text-decoration:none;font-size:.85rem;font-weight:700;
+    box-shadow:0 4px 0 var(--brown);white-space:nowrap}
+  .link:active{transform:translateY(4px);box-shadow:none}
+  .btn{background:var(--pink-d);color:#fff;font-weight:700;text-shadow:0 1px 0 #0002;padding:12px 24px}
+  .btn.ghost{background:#fff;color:var(--brown);text-shadow:none}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:0 4px 0 var(--brown)}
+  .btn.pulse:not(:disabled){animation:pulse 1.4s infinite}
+  @keyframes pulse{50%{transform:scale(1.06)}}
+  .row{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:14px;min-height:54px}
+  textarea{width:100%;font:inherit;border:2.5px solid var(--brown);border-radius:18px;padding:12px;resize:vertical;background:#fff;color:var(--brown)}
+  textarea:focus{outline:3px solid var(--pink)}
+  .sum{background:#fff;border:2.5px dashed var(--pink-d);border-radius:18px;padding:14px;text-align:left;font-size:.95rem;white-space:pre-line;margin:10px 0}
+  .speech{display:inline-block;position:relative;background:#fff;border:2.5px solid var(--brown);border-radius:18px;padding:6px 14px;font-size:.9rem;margin-bottom:8px}
+  .speech::after{content:"";position:absolute;left:50%;bottom:-9px;width:14px;height:14px;background:#fff;border-right:2.5px solid var(--brown);border-bottom:2.5px solid var(--brown);transform:translateX(-50%) rotate(45deg)}
+  #no{transition:left .25s,top .25s}
+
+  /* ---------- confetti ---------- */
+  .conf{position:fixed;top:-30px;z-index:9;pointer-events:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(112vh) rotate(540deg)}}
+  .spark{position:fixed;z-index:9;pointer-events:none;animation:spark .7s ease-out forwards;font-size:18px}
+  @keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+<main class="card" id="app"></main>
+
+<script>
+/* ===================== ตั้งค่าตรงนี้ ===================== */
+const CONFIG = {
+  herName: "เธอ",          // หรือใส่ในลิงก์ ?name=ชื่อเธอ&from=ชื่อเรา
+  myName: "เรา",
+  // รับคำตอบอัตโนมัติ: สมัคร formspree.io (ฟรี) แล้วใส่ URL เช่น "https://formspree.io/f/xxxxxxx"
+  // FormSubmit (ไม่ต้องสมัคร): "https://formsubmit.co/ajax/อีเมลของคุณ"  |  ใช้ server.js: "/api/answer"
+  formEndpoint: "https://ntfy.sh/lovever-8010d75e55",  // คำตอบเด้งเข้า ntfy (ดูที่ ntfy.sh/lovever-8010d75e55)
+  lineId: ""               // LINE ID ของคุณ (ไม่ต้องมี @) — เว้นว่างได้
+};
+const qs = new URLSearchParams(location.search);
+if (qs.get("name")) CONFIG.herName = qs.get("name");
+if (qs.get("from")) CONFIG.myName = qs.get("from");
+
+/* ===================== ตัวการ์ตูน (วาดเอง สไตล์น่ารัก) ===================== */
+const ink = "#6b4a3c";
+function face(cx,cy,blush=true){
+  return `<ellipse class="eye" cx="${cx-14}" cy="${cy}" rx="3.4" ry="4.6" fill="${ink}"/>
+          <ellipse class="eye" cx="${cx+14}" cy="${cy}" rx="3.4" ry="4.6" fill="${ink}"/>
+          ${blush?`<ellipse cx="${cx-24}" cy="${cy+8}" rx="6" ry="3.6" fill="#ffadc2"/><ellipse cx="${cx+24}" cy="${cy+8}" rx="6" ry="3.6" fill="#ffadc2"/>`:""}
+          <path d="M${cx-4} ${cy+7} q4 5 8 0" stroke="${ink}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`;
+}
+const CHARS = {
+  // ตัวกลมสีขาว หูเล็ก
+  mochi:`<svg viewBox="0 0 100 100"><g stroke="${ink}" stroke-width="2.6" stroke-linejoin="round">
+      <ellipse cx="28" cy="30" rx="10" ry="12" fill="#fff"/><ellipse cx="72" cy="30" rx="10" ry="12" fill="#fff"/>
+      <ellipse cx="50" cy="60" rx="38" ry="34" fill="#fff"/>
+      <ellipse cx="22" cy="68" rx="7" ry="9" fill="#fff"/><ellipse cx="78" cy="68" rx="7" ry="9" fill="#fff"/>
+      <ellipse cx="38" cy="92" rx="9" ry="5" fill="#fff"/><ellipse cx="62" cy="92" rx="9" ry="5" fill="#fff"/></g>
+      ${face(50,58)}</svg>`,
+  // ตัวขาวหมวกฟ้า
+  blue:`<svg viewBox="0 0 100 100"><g stroke="${ink}" stroke-width="2.6" stroke-linejoin="round">
+      <ellipse cx="50" cy="62" rx="36" ry="32" fill="#fff"/>
+      <path d="M16 46 Q18 14 36 24 L50 34 L64 24 Q82 14 84 46 Q50 36 16 46Z" fill="#8ed0f5"/>
+      <ellipse cx="22" cy="70" rx="7" ry="9" fill="#fff"/><ellipse cx="78" cy="70" rx="7" ry="9" fill="#fff"/>
+      <ellipse cx="38" cy="92" rx="9" ry="5" fill="#fff"/><ellipse cx="62" cy="92" rx="9" ry="5" fill="#fff"/></g>
+      ${face(50,62)}</svg>`,
+  // ตัวสีเหลืองหูยาว
+  bun:`<svg viewBox="0 0 100 100"><g stroke="${ink}" stroke-width="2.6" stroke-linejoin="round">
+      <ellipse cx="34" cy="20" rx="8" ry="22" fill="#fff0a8"/><ellipse cx="66" cy="20" rx="8" ry="22" fill="#fff0a8"/>
+      <ellipse cx="50" cy="64" rx="36" ry="30" fill="#fff0a8"/>
+      <ellipse cx="22" cy="72" rx="7" ry="8" fill="#fff0a8"/><ellipse cx="78" cy="72" rx="7" ry="8" fill="#fff0a8"/>
+      <ellipse cx="38" cy="93" rx="9" ry="5" fill="#fff0a8"/><ellipse cx="62" cy="93" rx="9" ry="5" fill="#fff0a8"/></g>
+      ${face(50,62)}</svg>`
+};
+const trio = () => `<div class="chars"><div class="c">${CHARS.mochi}</div><div class="c">${CHARS.blue}</div><div class="c">${CHARS.bun}</div></div>`;
+const solo = k => `<div class="chars one"><div class="c">${CHARS[k]}</div></div>`;
+
+/* ===================== พื้นหลังลอย ===================== */
+(function sky(){
+  const s=document.getElementById("sky");
+  for(let i=0;i<5;i++){
+    const c=document.createElement("div"); c.className="cloud";
+    const w=70+Math.random()*90; c.style.cssText=`width:${w}px;height:${w*.32}px;top:${5+Math.random()*60}vh;animation-duration:${50+Math.random()*50}s;animation-delay:-${Math.random()*80}s`;
+    s.appendChild(c);
+  }
+  const em=["🌸","⭐","💗","✨","🍓","🌷","☁️"];
+  for(let i=0;i<14;i++){
+    const f=document.createElement("div"); f.className="float"; f.textContent=em[i%em.length];
+    f.style.cssText=`left:${Math.random()*100}vw;font-size:${14+Math.random()*16}px;animation-duration:${12+Math.random()*14}s;animation-delay:-${Math.random()*20}s`;
+    s.appendChild(f);
+  }
+})();
+
+/* ===================== คำถาม ===================== */
+const ACT = {
+  movie:"🎬 ไปดูหนัง", cafe:"☕ ไปคาเฟ่", walk:"🌳 ไปเดินเล่น", drink:"🍻 ไปดื่ม", other:"💡 อื่นๆ เธอเลือกเอง"
+};
+const STEPS = {
+  day:{ title:"ว่างวันไหนน้า?", hint:"เลือกได้ทั้งสองวันเลย", type:"multi", char:"mochi",
+    opts:[{v:"วันนี้ (เสาร์)"},{v:"พรุ่งนี้ (อาทิตย์)"}] },
+  time:{ title:"ชอบไปช่วงไหน?", hint:"เลือกได้หลายช่วงเลย", type:"multi", char:"blue",
+    opts:[{v:"☀️ ตอนเช้า"},{v:"🌤️ ตอนบ่าย"},{v:"🌇 ตอนเย็น"},{v:"🌙 ตอนกลางคืน"}] },
+  act:{ title:"อยากไปทำอะไรกัน?", hint:"เลือกได้หลายอย่าง", type:"multi", char:"bun",
+    opts:Object.values(ACT).map(v=>({v})) },
+  cafe:{ title:"เลือกคาเฟ่หน่อย ☕", hint:"กด “ดูร้าน” เพื่อเปิด Instagram ของร้านได้", type:"multi", char:"mochi",
+    opts:[
+      {v:"Asok Pet House 🐶",link:"https://www.instagram.com/asokpethouse/"},
+      {v:"Little Woodrama 🪵",link:"https://www.instagram.com/littlewoodrama9/"},
+      {v:"ที่อื่น เธอเลือกเอง"} ] },
+  movie:{ title:"อยากดูเรื่องอะไร? 🎬", hint:"เลือกได้เลย", type:"multi", char:"blue",
+    opts:[{v:"รามายณะ: ปฐมบทแห่งตำนาน"},{v:"เรื่องอื่น เธอเลือกเอง"}] },
+  walk:{ title:"เดินเล่นสวนไหนดี? 🌳", hint:"เลือกได้หลายที่", type:"multi", char:"bun",
+    opts:[{v:"สวนรถไฟ"},{v:"สวนลุมพินี"},{v:"สวนเบญจกิติ"}] },
+  drink:{ title:"ไปดื่มสไตล์ไหน? 🍻", hint:"บอกแนวคร่าวๆ ก็ได้", type:"multi", char:"mochi",
+    opts:[{v:"🍸 บาร์เบาๆ จิบชิลๆ"},{v:"🍺 ร้านเบียร์/ร้านนั่งชิล"},{v:"🎶 ร้านดนตรีสด"},{v:"ที่ไหนก็ได้ เธอเลือกเอง"}] },
+  other:{ title:"อยากไปทำอะไรอีก? 💡", hint:"บอกเราได้เลย", type:"text", char:"blue",
+    placeholder:"เช่น ไปตลาดนัด / เล่นเกมที่ห้าง / ..." },
+  note:{ title:"มีอะไรอยากฝากบอกมั้ย?", hint:"พิมพ์ได้เลย (ข้ามได้)", type:"text", char:"bun",
+    placeholder:"เช่น ขอกลับก่อนสี่ทุ่ม / แพ้อาหารทะเล / ..." }
+};
+const LABEL={day:"📅 วัน",time:"⏰ เวลา",act:"🎯 อยากทำ",cafe:"☕ คาเฟ่",movie:"🎬 หนัง",walk:"🌳 สวน",drink:"🍻 ดื่ม",other:"💡 อื่นๆ",note:"💭 ฝากบอก"};
+
+const answers={};
+let idx=-1;
+const plan=()=>{
+  const a=answers.act||[], p=["day","time","act"];
+  if(a.includes(ACT.cafe))p.push("cafe");
+  if(a.includes(ACT.movie))p.push("movie");
+  if(a.includes(ACT.walk))p.push("walk");
+  if(a.includes(ACT.drink))p.push("drink");
+  if(a.includes(ACT.other))p.push("other");
+  p.push("note"); return p;
+};
+
+const app=document.getElementById("app");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const swap=html=>{ app.style.animation="none"; app.offsetHeight; app.style.animation=""; app.innerHTML=html; };
+
+function burst(x,y,n=10){
+  const e=["✨","💗","⭐","🌸"];
+  for(let i=0;i<n;i++){
+    const s=document.createElement("div"); s.className="spark"; s.textContent=e[i%4];
+    const a=Math.random()*6.28,d=40+Math.random()*50;
+    s.style.cssText+=`left:${x}px;top:${y}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px`;
+    document.body.appendChild(s); setTimeout(()=>s.remove(),800);
+  }
+}
+function confetti(n=60){
+  const e=["🌸","💗","⭐","🍓","✨","💛","🎀"];
+  for(let i=0;i<n;i++){
+    const c=document.createElement("div"); c.className="conf"; c.textContent=e[i%e.length];
+    c.style.cssText=`left:${Math.random()*100}vw;font-size:${16+Math.random()*14}px;animation-duration:${2.5+Math.random()*3}s;animation-delay:${Math.random()*1.2}s`;
+    document.body.appendChild(c); setTimeout(()=>c.remove(),8000);
+  }
+}
+
+function renderIntro(){
+  swap(`${trio()}
+    <div class="speech">มีเรื่องจะชวนน้า~</div>
+    <h1>${esc(CONFIG.herName)} คะ 💌<br>ช่วยตอบแบบสอบถามหน่อยนะ</h1>
+    <p>${esc(CONFIG.myName)}ทำมาให้เองเลย<br>ใช้เวลาไม่ถึง 1 นาที 🥺</p>
+    <p><b>ยินดีมั้ยคะ?</b></p>
+    <div class="row"><button class="btn pulse" id="yes">ยินดีสิ 💗</button><button class="btn ghost" id="no">ไม่</button></div>
+    <small>*ปุ่ม “ไม่” อาจจะกดยากหน่อยนะ 😜</small>`);
+  document.getElementById("yes").onclick=e=>{burst(e.clientX,e.clientY,14);idx=0;render();};
+  const no=document.getElementById("no");
+  const dodge=e=>{ e&&e.preventDefault&&e.preventDefault();
+    no.style.position="fixed";
+    no.style.left=(10+Math.random()*(innerWidth-90))+"px";
+    no.style.top=(10+Math.random()*(innerHeight-60))+"px"; };
+  no.addEventListener("mouseenter",dodge);
+  no.addEventListener("touchstart",dodge,{passive:false});
+  no.onclick=dodge;
+}
+
+function renderStep(){
+  const P=plan(), key=P[idx], q=STEPS[key];
+  const pct=(idx/P.length)*100;
+  let body="";
+  if(q.type==="text"){
+    body=`<textarea id="t" rows="3" placeholder="${esc(q.placeholder||"")}">${esc(answers[key]||"")}</textarea>`;
+  } else {
+    const cur=[].concat(answers[key]||[]);
+    body=`<div class="opts">`+q.opts.map((o,i)=>`
+      <div class="optrow" style="animation-delay:${i*.07}s">
+        <button class="opt ${cur.includes(o.v)?"sel":""}" data-v="${esc(o.v)}">${esc(o.v)}</button>
+        ${o.link?`<a class="link" href="${o.link}" target="_blank" rel="noopener">ดูร้าน ↗</a>`:""}
+      </div>`).join("")+`</div>`;
+  }
+  const last=idx===P.length-1;
+  swap(`<div class="bar"><i style="width:${pct}%"></i></div>
+    ${solo(q.char)}
+    <h1>${esc(q.title)}</h1><small>${esc(q.hint)}</small>
+    ${body}
+    <div class="row">
+      ${idx>0?`<button class="btn ghost" id="back">ย้อนกลับ</button>`:""}
+      <button class="btn" id="next">${last?"ส่งคำตอบ 💌":"ต่อไป ➜"}</button>
+    </div>`);
+  const next=document.getElementById("next");
+  const valid=()=>q.type==="text"||[].concat(answers[key]||[]).length>0;
+  next.disabled=!valid();
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=e=>{
+    const v=b.dataset.v;
+    if(q.type==="single") answers[key]=v;
+    else { const a=answers[key]||[]; answers[key]=a.includes(v)?a.filter(x=>x!==v):[...a,v]; }
+    const now=[].concat(answers[key]);
+    document.querySelectorAll(".opt").forEach(x=>x.classList.toggle("sel",now.includes(x.dataset.v)));
+    if(now.includes(v)) burst(e.clientX,e.clientY,7);
+    next.disabled=!valid();
+    // ถ้าเปลี่ยนกิจกรรม ให้ล้างคำตอบของสิ่งที่ไม่ได้เลือกแล้ว
+    if(key==="act"){ const keep=plan(); ["cafe","movie","walk","drink","other"].forEach(k=>{if(!keep.includes(k))delete answers[k];}); }
+  });
+  if(q.type==="text") document.getElementById("t").oninput=e=>answers[key]=e.target.value;
+  next.onclick=e=>{ burst(e.clientX,e.clientY,8); idx++; idx>=plan().length?finish():render(); };
+  const back=document.getElementById("back"); if(back) back.onclick=()=>{idx--;render();};
+}
+
+function summary(){
+  const L=a=>[].concat(a).join(", ");
+  const lines=[`💌 คำตอบจาก ${CONFIG.herName}`];
+  plan().forEach(k=>{ const v=answers[k]; if(v&&v.length) lines.push(`${LABEL[k]}: ${L(v)}`); });
+  return lines.join("\n");
+}
+
+async function finish(){
+  confetti(70);
+  const text=summary(); let sent=false;
+  if(CONFIG.formEndpoint){
+    try{
+      const r=await fetch(CONFIG.formEndpoint,{method:"POST",
+        body:text});   // ntfy รับข้อความธรรมดา
+      sent=r.ok;
+    }catch(e){}
+  }
+  const line=CONFIG.lineId?`https://line.me/R/oaMessage/@${encodeURIComponent(CONFIG.lineId)}/?${encodeURIComponent(text)}`:"";
+  swap(`${trio()}
+    <h1>ขอบคุณนะ ${esc(CONFIG.herName)}! 🥰</h1>
+    <p>${sent?esc(CONFIG.myName)+"ได้รับคำตอบแล้ว เดี๋ยวรีบติดต่อกลับน้า 💗"
+            :"กดปุ่มด้านล่างเพื่อส่งคำตอบให้"+esc(CONFIG.myName)+"หน่อยนะ 💗"}</p>
+    <div class="sum">${esc(text)}</div>
+    <div class="row" style="flex-direction:column">
+      ${sent?"":`<button class="btn pulse" id="share">ส่งคำตอบ 📤</button>`}
+      ${line&&!sent?`<a class="btn" style="text-decoration:none" href="${line}">เปิด LINE ส่งเลย</a>`:""}
+    </div>`);
+  const share=document.getElementById("share");
+  if(share) share.onclick=async()=>{
+    try{
+      if(navigator.share) await navigator.share({text});
+      else { await navigator.clipboard.writeText(text); share.textContent="คัดลอกแล้ว! ไปวางในแชทได้เลย ✅"; }
+    }catch(e){}
+  };
+}
+
+function render(){ idx<0?renderIntro():renderStep(); }
+render();
+</script>
+</body>
+</html>
